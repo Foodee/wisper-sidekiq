@@ -53,6 +53,8 @@ module Wisper
       # options include options like queue, retry, and other sidekiq_options
       original_options = sidekiq_options(subscriber)
       debounce_options = original_options[:debounce]
+      original_options["wrapped"] = "#{subscriber}##{event}"
+      original_options["display_class"] = "#{subscriber}##{event}"
       # Initialize the Sidekiq::Worker object with sidekiq_options
       worker = Worker.set(original_options)
 
